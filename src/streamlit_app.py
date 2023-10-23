@@ -33,21 +33,22 @@ if file_hub is not None and file_er is not None:
         df_match, df_no_match = module.get_result(df_merge, df_er_clean)
 
         # download button
-        # df match
         df_match_csv = module.convert_df(df_match)
-        st.download_button(
-            label= "Match leads",
-            data= df_match_csv,
-            file_name= "match_data.csv",
-        )
-
-        # df no match
         df_no_match_csv = module.convert_df(df_no_match)
-        st.download_button(
-            label= "No match leads",
-            data= df_no_match_csv,
-            file_name= "no_match_data.csv",
-        )
+
+    # df match
+    st.download_button(
+        label= "Match leads",
+        data= df_match_csv,
+        file_name= "match_data.csv",
+    )
+
+    # df no match
+    st.download_button(
+        label= "No match leads",
+        data= df_no_match_csv,
+        file_name= "no_match_data.csv",
+    )
        
     st.success('Your file is ready to download.', icon="✅")
     st.caption('Note: This is the resulting file. Download and open it with Excel.')
