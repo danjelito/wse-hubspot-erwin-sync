@@ -1,5 +1,13 @@
 import pandas as pd
 import numpy as np
+import streamlit as st
+
+def read_file(uploaded_file):
+    try:
+        df = pd.read_csv(uploaded_file)
+    except UnicodeDecodeError:
+        df = pd.read_excel(uploaded_file)
+    return df
 
 
 def clean_email(df, email_col):
@@ -47,7 +55,6 @@ def clean_df_er(df):
         "Engga, deh.": "No",
         np.nan: "Blank",
     }
-
     return (df
         .rename(columns=lambda c: c.lower().replace(" ", "_").replace("/", "_").replace("?", ""))
         .rename(columns={
@@ -100,6 +107,7 @@ def merge_dfs(df_hub_clean, df_er_clean):
     )
     return pd.concat([df_merge_email, df_merge_phone], axis=0)
 
+
 def get_result(df_merged, df_er_clean):
     df_match = (df_merged
         .dropna(subset=["stage", "learning_preference", "tmk_call"])
@@ -126,3 +134,7 @@ def get_result(df_merged, df_er_clean):
                                 ))
     )
     return df_match, df_no_match
+
+@st.cache_data
+def convert_df(df):
+   return df.to_csv(index=False).encode('utf-8')
