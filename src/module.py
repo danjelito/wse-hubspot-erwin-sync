@@ -56,11 +56,19 @@ def clean_df_er(df):
         np.nan: "Blank",
     }
     return (df
-        .rename(columns=lambda c: c.lower().replace(" ", "_").replace("/", "_").replace("?", ""))
+        .rename(columns=lambda c: (c
+                                   .lower()
+                                   .replace(" ", "_")
+                                   .replace("/", "_")
+                                   .replace("?", "")
+                                   ))
         .rename(columns={
             "stage_display_name": "stage",
+            "stage_id_display_name": "stage",
             "source_type": "source",
             "phone_number": "phone",
+            "email_from": "email",
+            "is_tmk_call": "tmk_call",
         })
         .loc[
             lambda df_: 
