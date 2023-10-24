@@ -58,7 +58,9 @@ def clean_df_er(df):
     return (df
         .rename(columns=lambda c: c.lower().replace(" ", "_").replace("/", "_").replace("?", ""))
         .rename(columns={
-            "stage_display_name": "stage"
+            "stage_display_name": "stage",
+            "source_type": "source",
+            "phone_number": "phone",
         })
         .loc[
             lambda df_: 
